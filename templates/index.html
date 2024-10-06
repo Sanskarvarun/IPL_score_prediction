@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IPL Score Predictor</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>IPL Score Predictor</h1>
+        <form action="/predict" method="POST">
+            <div class="input-group">
+                <label for="venue">Venue:</label>
+                <select id="venue" name="venue" required>
+                    <option value="0">Wankhede Stadium</option>
+                    <option value="1">Eden Gardens</option>
+                    <option value="2">Chinnaswamy Stadium</option>
+                    <option value="3">Feroz Shah Kotla</option>
+                    <option value="4">Sawai Mansingh Stadium</option>
+                    <option value="5">Rajiv Gandhi International Stadium</option>
+                </select>
+            </div>
+
+            <div class="input-group">
+                <label for="bat_team">Batting Team:</label>
+                <select id="bat_team" name="bat_team" required>
+                    <option value="0">Chennai Super Kings</option>
+                    <option value="1">Delhi Capitals</option>
+                    <option value="2">Kings XI Punjab</option>
+                    <option value="3">Kolkata Knight Riders</option>
+                    <option value="4">Mumbai Indians</option>
+                    <option value="5">Rajasthan Royals</option>
+                    <option value="6">Royal Challengers Bangalore</option>
+                    <option value="7">Sunrisers Hyderabad</option>
+                </select>
+            </div>
+
+            <div class="input-group">
+                <label for="bowl_team">Bowling Team:</label>
+                <select id="bowl_team" name="bowl_team" required>
+                    <option value="0">Chennai Super Kings</option>
+                    <option value="1">Delhi Capitals</option>
+                    <option value="2">Kings XI Punjab</option>
+                    <option value="3">Kolkata Knight Riders</option>
+                    <option value="4">Mumbai Indians</option>
+                    <option value="5">Rajasthan Royals</option>
+                    <option value="6">Royal Challengers Bangalore</option>
+                    <option value="7">Sunrisers Hyderabad</option>
+                </select>
+            </div>
+
+            <div class="input-group">
+                <label for="batsman">Batsman:</label>
+                <select id="batsman" name="batsman" required>
+                    {% for batsman in unique_batsmen %}
+                    <option value="{{ loop.index0 }}">{{ batsman }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="input-group">
+                <label for="bowler">Bowler:</label>
+                <select id="bowler" name="bowler" required>
+                    {% for bowler in unique_bowlers %}
+                    <option value="{{ loop.index0 }}">{{ bowler }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <button type="submit">Predict Score</button>
+        </form>
+
+        <div id="result" class="result">
+            {% if prediction %}
+                <p>Predicted Score: {{ prediction }}</p>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>
